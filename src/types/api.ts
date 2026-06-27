@@ -7,6 +7,7 @@ export interface ApiMedia {
 export interface ApiProject {
   id: number;
   title: string;
+  category?: 'residential' | 'retail' | 'corporate';
   description: string;
   cover_image: string;
   gallery_images: string[];

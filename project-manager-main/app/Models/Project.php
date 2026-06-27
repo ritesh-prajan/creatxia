@@ -11,7 +11,7 @@ class Project extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'category', 'description'];
 
     public function registerMediaCollections(): void
     {

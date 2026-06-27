@@ -4,7 +4,10 @@ import { ApiProject, BookingPayload, BookingResponse } from '../types/api';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const getCategoryFromProject = (project: ApiProject): 'residential' | 'retail' | 'corporate' => {
-  const content = (project.title + ' ' + project.description).toLowerCase();
+  if (project.category && ['residential', 'retail', 'corporate'].includes(project.category)) {
+    return project.category;
+  }
+  const content = (project.title + ' ' + (project.description || '')).toLowerCase();
   if (content.includes('retail') || content.includes('commercial') || content.includes('shop') || content.includes('store')) {
     return 'retail';
   }

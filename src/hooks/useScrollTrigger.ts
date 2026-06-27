@@ -60,54 +60,47 @@ export function useImmersionAnimation(
     const panels = panelsRef.current;
     if (panels.length === 0) return;
 
-    // We pin the container for 400vh
-    // There are several images. The first is visible at start.
-    // The others crossfade and scale in sequentially.
+    const totalPanels = panels.length;
+    const stepDuration = 2; // Each panel stage gets an identical timeline slice
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=400%',
+        end: `+=${totalPanels * 100}%`,
         pin: true,
         scrub: 1,
         anticipatePin: 1,
       },
     });
 
-    // Make sure all panels except the first are set to opacity 0 and prepared
+    // Initial setup for all panels
     panels.forEach((panel, index) => {
       const bg = panel.querySelector('.immersion-bg');
       const content = panel.querySelector('.immersion-text');
+      gsap.set(panel, { opacity: index === 0 ? 1 : 0, zIndex: 10 + index });
+      gsap.set(bg, { scale: 1 });
+      gsap.set(content, { opacity: index === 0 ? 1 : 0, y: index === 0 ? 0 : 50 });
+    });
 
-      if (index === 0) {
-        // First panel starts fully visible and zooms in slightly
-        gsap.set(panel, { opacity: 1, zIndex: 10 });
-        gsap.set(bg, { scale: 1 });
-        gsap.set(content, { opacity: 1, y: 0 });
+    // Build timeline with uniform timing across all stages
+    panels.forEach((panel, index) => {
+      const bg = panel.querySelector('.immersion-bg');
+      const content = panel.querySelector('.immersion-text');
+      const startTime = index * stepDuration;
 
-        tl.to(bg, { scale: 1.15, duration: 1.5, ease: 'sine.inOut' });
-      } else {
-        // Other panels start at opacity 0, scale 1 and fade in on scroll
-        gsap.set(panel, { opacity: 0, zIndex: 10 + index });
-        gsap.set(bg, { scale: 1 });
-        gsap.set(content, { opacity: 0, y: 50 });
+      // 1. Continuous smooth background zoom over the panel's active stage
+      tl.to(bg, { scale: 1.15, duration: stepDuration, ease: 'none' }, startTime);
 
-        const label = `stage-${index}`;
-        tl.add(label);
+      // 2. Transition out text before advancing to next panel
+      if (index < totalPanels - 1) {
+        tl.to(content, { opacity: 0, y: -40, duration: 0.6, ease: 'power2.in' }, startTime + stepDuration - 0.6);
+      }
 
-        // Parallel transition animations:
-        // 1. Fade out previous text
-        if (index > 0) {
-          const prevContent = panels[index - 1].querySelector('.immersion-text');
-          tl.to(prevContent, { opacity: 0, y: -50, duration: 0.5, ease: 'power2.inOut' }, label);
-        }
-
-        // 2. Fade in the panel
-        tl.to(panel, { opacity: 1, duration: 1, ease: 'power2.inOut' }, label)
-          // 3. Scale up incoming background image
-          .to(bg, { scale: 1.15, duration: 1.5, ease: 'sine.inOut' }, label)
-          // 4. Fade in and slide up incoming text
-          .to(content, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, `${label}+=0.3`);
+      // 3. Transition in new panel and text at start of stage
+      if (index > 0) {
+        tl.to(panel, { opacity: 1, duration: 0.8, ease: 'power2.out' }, startTime)
+          .to(content, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, startTime + 0.2);
       }
     });
 

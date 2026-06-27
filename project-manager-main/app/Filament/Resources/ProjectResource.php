@@ -28,10 +28,19 @@ class ProjectResource extends Resource
                             ->required()
                             ->maxLength(255),
 
+                        Forms\Components\Select::make('category')
+                            ->options([
+                                'residential' => 'Residential',
+                                'retail' => 'Retail & Commercial',
+                                'corporate' => 'Corporate & Office',
+                            ])
+                            ->default('residential')
+                            ->required(),
+
                         Forms\Components\RichEditor::make('description')
                             ->required()
                             ->columnSpanFull(), 
-                    ])->columns(1),
+                    ])->columns(2),
 
                 Forms\Components\Section::make('Project Media')
                     ->schema([
@@ -58,6 +67,17 @@ class ProjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('category')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'residential' => 'info',
+                        'retail' => 'warning',
+                        'corporate' => 'success',
+                        default => 'gray',
+                    })
                     ->searchable()
                     ->sortable(),
 

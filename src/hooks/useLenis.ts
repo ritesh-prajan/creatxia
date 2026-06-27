@@ -1,16 +1,11 @@
 import { useEffect } from 'react';
+import Lenis from '@studio-freight/lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function useLenis() {
   useEffect(() => {
-    const LenisClass = (window as any).Lenis;
-    if (!LenisClass) {
-      console.warn('Lenis scroll is not loaded from CDN yet.');
-      return;
-    }
-
-    const lenis = new LenisClass({
+    const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,

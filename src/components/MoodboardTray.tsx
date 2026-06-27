@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, Calendar } from 'lucide-react';
+import { gsap } from 'gsap';
 import { useMoodboard } from '../hooks/useMoodboard';
 import { Button } from './ui/Button';
 
@@ -9,14 +10,56 @@ interface MoodboardTrayProps {
 
 export const MoodboardTray: React.FC<MoodboardTrayProps> = ({ onOpenBooking }) => {
   const { moodboard, removeFromMoodboard } = useMoodboard();
+  const trayRef = useRef<HTMLDivElement>(null);
+  const prevLengthRef = useRef(moodboard.length);
+  const shouldAnimateInRef = useRef(false);
+  const [visible, setVisible] = useState(moodboard.length > 0);
 
-  if (moodboard.length === 0) {
+  useEffect(() => {
+    const prev = prevLengthRef.current;
+    const curr = moodboard.length;
+    prevLengthRef.current = curr;
+
+    if (curr > 0 && prev === 0) {
+      shouldAnimateInRef.current = true;
+      setVisible(true);
+    } else if (curr === 0 && prev > 0) {
+      const tray = trayRef.current;
+      if (tray) {
+        gsap.to(tray, {
+          y: '100%',
+          duration: 0.5,
+          ease: 'power3.in',
+          onComplete: () => setVisible(false),
+        });
+      } else {
+        setVisible(false);
+      }
+    }
+  }, [moodboard.length]);
+
+  useEffect(() => {
+    if (!visible || !shouldAnimateInRef.current) return;
+
+    shouldAnimateInRef.current = false;
+    const tray = trayRef.current;
+    if (!tray) return;
+
+    gsap.fromTo(
+      tray,
+      { y: '100%' },
+      { y: '0%', duration: 0.5, ease: 'power3.out' }
+    );
+  }, [visible]);
+
+  if (!visible) {
     return null;
   }
 
   return (
     <div
-      className="fixed bottom-0 left-0 w-full bg-navy text-white z-30 shadow-2xl border-t border-white/10 py-5 px-6 animate-slide-up"
+      ref={trayRef}
+      className="fixed bottom-0 left-0 w-full bg-navy text-white z-30 shadow-2xl border-t border-white/10 py-5 px-6"
       id="moodboard-tray-container"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">

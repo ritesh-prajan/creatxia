@@ -12,13 +12,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY >= 80);
     };
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -47,10 +44,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-40 py-6 transition-[background-color,box-shadow,color,padding] duration-[400ms] ease-in-out ${
           isScrolled
             ? 'bg-white shadow-md py-4 text-navy'
-            : 'bg-transparent py-6 text-white'
+            : 'bg-transparent text-white'
         }`}
         id="main-navbar"
       >
@@ -71,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
                 key={link.id}
                 href={link.id}
                 onClick={(e) => handleLinkClick(e, link.id)}
-                className={`text-xs uppercase tracking-widest font-medium font-sans hover:text-orange-accent transition-colors duration-300 ${
+                className={`text-xs uppercase tracking-widest font-medium font-sans hover:text-orange-accent transition-colors duration-[400ms] ease-in-out ${
                   isScrolled ? 'text-navy/80' : 'text-white/80'
                 }`}
               >

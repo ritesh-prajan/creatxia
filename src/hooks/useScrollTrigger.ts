@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from 'react';
+import { useEffect, useLayoutEffect, RefObject } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -54,7 +54,7 @@ export function useImmersionAnimation(
   containerRef: RefObject<HTMLElement | null>,
   panelsRef: RefObject<HTMLDivElement[] | null>
 ) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!containerRef.current || !panelsRef.current) return;
 
     const panels = panelsRef.current;

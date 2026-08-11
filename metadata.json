@@ -1,0 +1,6 @@
+{
+  "name": "Tuck & Pin",
+  "description": "Professional saree pleating, doorstep delivery, and draping classes in Chennai.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

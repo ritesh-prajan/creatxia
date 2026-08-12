@@ -6,7 +6,7 @@ import { PageView } from '../types';
 interface GalleryItem {
   id: string;
   title: string;
-  category: 'Celebrity & Designer' | 'Bridal & Festive' | 'Pre-Pleated Drapes' | 'Studio Showcase';
+  category: 'Celebrity' | 'Bridal & Festive' | 'Pre-Pleated Drapes' | 'Studio Showcase';
   image: string;
   sareeType: string;
 }
@@ -29,7 +29,7 @@ const galleryData: GalleryItem[] = [
   {
     id: 'g_3',
     title: 'Celebrity Kanchipuram Box Fold Drape',
-    category: 'Celebrity & Designer',
+    category: 'Celebrity',
     image: '/gallery/img_e1084.jpg',
     sareeType: 'Pure Kanchipuram Silk',
   },
@@ -50,21 +50,21 @@ const galleryData: GalleryItem[] = [
   {
     id: 'g_6',
     title: 'Celebrity Crimson Red Silk Saree',
-    category: 'Celebrity & Designer',
+    category: 'Celebrity',
     image: '/gallery/img_e1376.jpg',
     sareeType: 'Heavy Zari Red Silk',
   },
   {
     id: 'g_7',
     title: 'Celebrity Studio Pallu Styling Drape',
-    category: 'Celebrity & Designer',
+    category: 'Celebrity',
     image: '/gallery/img_e1379.jpg',
     sareeType: 'Expert Studio Precision',
   },
   {
     id: 'g_8',
     title: 'Celebrity Peach Georgette Drape',
-    category: 'Celebrity & Designer',
+    category: 'Celebrity',
     image: '/gallery/img_e1509.jpg',
     sareeType: 'Georgette Silk Drape',
   },
@@ -127,14 +127,14 @@ const galleryData: GalleryItem[] = [
   {
     id: 'g_17',
     title: 'Celebrity Draping Style Masterclass',
-    category: 'Celebrity & Designer',
+    category: 'Celebrity',
     image: '/gallery/img_e8577.jpg',
     sareeType: 'Academy Draping Technique',
   },
   {
     id: 'g_18',
     title: 'Celebrity Sunset Temple Border Saree',
-    category: 'Celebrity & Designer',
+    category: 'Celebrity',
     image: '/gallery/img_e8655.jpg',
     sareeType: 'Heritage Temple Border Silk',
   },
@@ -242,7 +242,7 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
       {/* Filter Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-brand-blush/20 pb-4">
         <div className="flex flex-wrap items-center gap-2">
-          {['All', 'Celebrity & Designer', 'Bridal & Festive', 'Pre-Pleated Drapes', 'Studio Showcase'].map((cat) => (
+          {['All', 'Celebrity', 'Bridal & Festive', 'Pre-Pleated Drapes', 'Studio Showcase'].map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}

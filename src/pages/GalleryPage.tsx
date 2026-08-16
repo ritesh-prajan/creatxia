@@ -1,184 +1,134 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Sparkles, X, ChevronLeft, ChevronRight, CalendarDays, ExternalLink, Filter, Eye } from 'lucide-react';
+import { Sparkles, X, ChevronLeft, ChevronRight, ExternalLink, Eye } from 'lucide-react';
 import { PageView } from '../types';
 
 interface GalleryItem {
   id: string;
-  title: string;
   category: 'Celebrity' | 'Bridal & Festive' | 'Pre-Pleated Drapes' | 'Studio Showcase';
   image: string;
-  sareeType: string;
 }
 
 const galleryData: GalleryItem[] = [
   {
     id: 'g_1',
-    title: 'Champagne Gold Tissue Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_0582.jpg',
-    sareeType: 'Champagne Gold Tissue Silk',
   },
   {
     id: 'g_2',
-    title: 'Metallic Bronze Satin Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e0269.jpg',
-    sareeType: 'Contemporary Satin Silk',
   },
   {
     id: 'g_3',
-    title: 'Emerald Green Kanchipuram Silk Saree',
     category: 'Celebrity',
     image: '/gallery/img_e1084.jpg',
-    sareeType: 'Pure Kanchipuram Silk',
   },
   {
     id: 'g_4',
-    title: 'Deep Maroon Crepe Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e1100.jpg',
-    sareeType: 'Designer Crepe Silk',
   },
   {
     id: 'g_5',
-    title: 'Rose Gold Sheer Organza Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e1371.jpg',
-    sareeType: 'Sheer Organza Silk',
   },
   {
     id: 'g_6',
-    title: 'Crimson Red Heavy Zari Silk Saree',
     category: 'Celebrity',
     image: '/gallery/img_e1376.jpg',
-    sareeType: 'Heavy Zari Red Silk',
   },
   {
     id: 'g_7',
-    title: 'Royal Plum Designer Silk Saree',
     category: 'Celebrity',
     image: '/gallery/img_e1379.jpg',
-    sareeType: 'Expert Studio Precision',
   },
   {
     id: 'g_8',
-    title: 'Pastel Peach Georgette Saree',
     category: 'Celebrity',
     image: '/gallery/img_e1509.jpg',
-    sareeType: 'Georgette Silk Drape',
   },
   {
     id: 'g_9',
-    title: 'Nude Gold Sequined Tissue Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e1528.jpg',
-    sareeType: 'Sequined Tissue Georgette',
   },
   {
     id: 'g_10',
-    title: 'Rich Magenta Kanchipuram Pattu Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e1547.jpg',
-    sareeType: 'Heavy Kanchipuram Brocade',
   },
   {
     id: 'g_11',
-    title: 'Charcoal Grey Silk Saree',
     category: 'Studio Showcase',
     image: '/gallery/img_e1661.jpg',
-    sareeType: 'Zero-Damage Heat Setting',
   },
   {
     id: 'g_12',
-    title: 'Royal Emerald Green Kanjivaram Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e3999.jpg',
-    sareeType: 'Kanjivaram Silk Pleats',
   },
   {
     id: 'g_13',
-    title: 'Ivory Pearl Embellished Silk Saree',
     category: 'Bridal & Festive',
     image: '/gallery/img_e4019.jpg',
-    sareeType: 'Pearl Embellished Ivory Silk',
   },
   {
     id: 'g_14',
-    title: 'Sage Green Silk Saree',
     category: 'Studio Showcase',
     image: '/gallery/img_e4812.jpg',
-    sareeType: 'Wardrobe Ready Hanger Fold',
   },
   {
     id: 'g_15',
-    title: 'Teal Blue Soft Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/img_e5383.jpg',
-    sareeType: 'Soft Silk Pre-Pleat',
   },
   {
     id: 'g_16',
-    title: 'Dusty Mauve Designer Silk Saree',
     category: 'Bridal & Festive',
     image: '/gallery/img_e5560.jpg',
-    sareeType: 'Bridal Designer Mauve Silk',
   },
   {
     id: 'g_17',
-    title: 'Coral Gold Silk Saree',
     category: 'Celebrity',
     image: '/gallery/img_e8577.jpg',
-    sareeType: 'Academy Draping Technique',
   },
   {
     id: 'g_18',
-    title: 'Sunset Gold Temple Border Silk Saree',
     category: 'Celebrity',
     image: '/gallery/img_e8655.jpg',
-    sareeType: 'Heritage Temple Border Silk',
   },
   {
     id: 'g_19',
-    title: 'Golden Mustard Pattu Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/jbkm2418.jpg',
-    sareeType: 'Pre-Pleated Wardrobe Pack',
   },
   {
     id: 'g_20',
-    title: 'Bright Mustard Yellow Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/kzqq3563.jpg',
-    sareeType: 'Traditional Festival Silk',
   },
   {
     id: 'g_21',
-    title: 'Copper Zari Shimmer Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/pnra7250.jpg',
-    sareeType: 'Copper Zari Shimmer Silk',
   },
   {
     id: 'g_22',
-    title: 'Blush Pink Georgette Silk Saree',
     category: 'Bridal & Festive',
     image: '/gallery/qndd2515.jpg',
-    sareeType: 'Bridal Georgette Pre-Pleat',
   },
   {
     id: 'g_23',
-    title: 'Classic Olive Green Silk Saree',
     category: 'Studio Showcase',
     image: '/gallery/uhvn7069.jpg',
-    sareeType: 'Quality Inspection',
   },
   {
     id: 'g_24',
-    title: 'Silver Zari Tissue Silk Saree',
     category: 'Pre-Pleated Drapes',
     image: '/gallery/ykoi7845.jpg',
-    sareeType: 'Silver Zari Tissue Drape',
   },
 ];
 
@@ -234,7 +184,7 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
             Client & Studio Gallery
           </h1>
           <p className="text-sm md:text-base text-neutral-100 leading-relaxed font-light">
-            Explore our portfolio of 24+ real pre-pleated saree transformations, celebrity draping styles, and studio craftsmanship.
+            Explore our portfolio of 24 real pre-pleated saree transformations, celebrity draping styles, and studio craftsmanship.
           </p>
         </div>
       </div>
@@ -245,7 +195,10 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
           {['All', 'Celebrity', 'Bridal & Festive', 'Pre-Pleated Drapes', 'Studio Showcase'].map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => {
+                setActiveCategory(cat);
+                setLightboxIndex(null);
+              }}
               className={`py-2 px-4 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
                 activeCategory === cat
                   ? 'bg-brand-plum text-white shadow-xs'
@@ -258,7 +211,7 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
         </div>
 
         <div className="text-xs text-neutral-mid hidden sm:block">
-          Showing <span className="font-bold text-brand-plum">{filteredItems.length}</span> items
+          Showing <span className="font-bold text-brand-plum">{filteredItems.length}</span> photos
         </div>
       </div>
 
@@ -273,7 +226,7 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
             <div className="relative aspect-[3/4] overflow-hidden bg-neutral-warm/20">
               <img
                 src={item.image}
-                alt={item.title}
+                alt={item.category}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
@@ -286,15 +239,6 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
               <span className="absolute top-3 left-3 bg-brand-plum/90 backdrop-blur-md text-white text-[9px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-2xs">
                 {item.category}
               </span>
-            </div>
-
-            <div className="p-4 space-y-1.5 bg-white">
-              <h3 className="font-serif font-bold text-sm text-neutral-dark group-hover:text-brand-plum transition-colors line-clamp-1">
-                {item.title}
-              </h3>
-              <p className="text-[11px] text-brand-rose font-medium">
-                {item.sareeType}
-              </p>
             </div>
           </div>
         ))}
@@ -313,12 +257,9 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
             {/* Modal Header */}
             <div className="p-4 sm:p-5 border-b border-white/10 flex justify-between items-center bg-black/40">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-rose block">
-                  {currentItem.category} • {lightboxIndex! + 1} of {filteredItems.length}
+                <span className="text-[11px] font-bold uppercase tracking-widest text-brand-rose block">
+                  {currentItem.category} • Photo {lightboxIndex! + 1} of {filteredItems.length}
                 </span>
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-white mt-0.5">
-                  {currentItem.title}
-                </h3>
               </div>
 
               <button
@@ -333,7 +274,7 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
             <div className="relative flex-1 bg-black/60 flex items-center justify-center p-4 min-h-[360px] overflow-hidden">
               <img
                 src={currentItem.image}
-                alt={currentItem.title}
+                alt={currentItem.category}
                 className="max-w-full max-h-[65vh] object-contain rounded-xl shadow-lg"
               />
 
@@ -357,14 +298,17 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
             {/* Modal Footer Bar */}
             <div className="p-4 sm:p-5 border-t border-white/10 bg-black/40 flex flex-col sm:flex-row justify-between items-center gap-4">
               <div>
-                <span className="text-xs text-neutral-300 block">Saree Variant</span>
-                <span className="font-serif font-bold text-white text-sm">{currentItem.sareeType}</span>
+                <span className="text-xs text-neutral-300 block">Selected Style</span>
+                <span className="font-serif font-bold text-white text-sm">
+                  {currentItem.category} Style (Photo #{lightboxIndex! + 1})
+                </span>
               </div>
 
               <button
                 onClick={() => {
                   closeLightbox();
-                  if (onBookService) onBookService(currentItem.title);
+                  const styleRefName = `${currentItem.category} Style (Photo #${lightboxIndex! + 1})`;
+                  if (onBookService) onBookService(styleRefName);
                   navigateTo('book');
                 }}
                 className="w-full sm:w-auto bg-brand-plum hover:bg-brand-rose active:scale-95 text-white font-bold text-xs py-3 px-6 rounded-full shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider"

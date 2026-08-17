@@ -60,23 +60,23 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
   const measurementGuides = {
     hip: {
       title: 'Hip Measurement',
-      desc: 'Measure around the fullest part of your hips/buttocks where the saree skirt is normally pinned or secured.',
+      desc: 'Measure around the fullest part of the hips.',
     },
     pallu: {
       title: 'Shoulder to Mid-Calf',
-      desc: 'Measure from your left shoulder peak down to your mid-calf or ankle. This determines your Pallu drape length.',
+      desc: 'Measure from the top of the shoulder down to the mid-calf.',
     },
     lsSpine: {
-      title: 'Left Shoulder to Mid-Spine',
-      desc: 'Measure from your left shoulder peak curving down to the mid-point of your upper spine.',
+      title: 'Left Shoulder to Spine',
+      desc: 'Measure from the left shoulder across the back to the spine.',
     },
     spineThigh: {
-      title: 'Mid of Spine (near hip) to Front Right Thigh',
-      desc: 'Mid of spine near hip and come from back to front right thigh.',
+      title: 'Spine to Mid-R. Thigh',
+      desc: 'Measure from the mid of the spine (near hip level) around the body to the front, ending at the mid of the right thigh.',
     },
     lsBust: {
-      title: 'Left Shoulder to Mid-Bust',
-      desc: 'Measure from the top left shoulder peak down to the midpoint of your bust line.',
+      title: 'Left Shoulder to Bust',
+      desc: 'Measure from the left shoulder to the fullest point of the bust.',
     },
     bust: {
       title: 'Full Bust Coverage',

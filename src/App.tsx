@@ -40,6 +40,7 @@ const pageNames: Record<PageView, string> = {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
   const [activeFormService, setActiveFormService] = useState<string>('');
+  const [activePhotoUrl, setActivePhotoUrl] = useState<string>('');
   const [activeClassTier, setActiveClassTier] = useState<string>('');
   const [isTermsOpen, setIsTermsOpen] = useState<boolean>(false);
   
@@ -133,8 +134,9 @@ export default function App() {
     }, 420);
   };
 
-  const handleBookService = (serviceId: string) => {
+  const handleBookService = (serviceId: string, photoUrl?: string) => {
     setActiveFormService(serviceId);
+    setActivePhotoUrl(photoUrl || '');
     navigateTo('book');
   };
 
@@ -190,6 +192,8 @@ export default function App() {
                 <BookPage
                   activeFormService={activeFormService}
                   setActiveFormService={setActiveFormService}
+                  selectedPhotoUrl={activePhotoUrl}
+                  setSelectedPhotoUrl={setActivePhotoUrl}
                 />
               )}
               {displayPage === 'book-class' && (

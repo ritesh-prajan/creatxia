@@ -5,9 +5,16 @@ import BookingForm from '../components/BookingForm';
 interface BookPageProps {
   activeFormService: string;
   setActiveFormService: (serviceId: string) => void;
+  selectedPhotoUrl?: string;
+  setSelectedPhotoUrl?: (photoUrl: string) => void;
 }
 
-export default function BookPage({ activeFormService, setActiveFormService }: BookPageProps) {
+export default function BookPage({
+  activeFormService,
+  setActiveFormService,
+  selectedPhotoUrl = '',
+  setSelectedPhotoUrl,
+}: BookPageProps) {
   return (
     <div className="max-w-5xl mx-auto py-12 px-6 animate-fadeIn text-left">
       <SectionTitle
@@ -19,8 +26,10 @@ export default function BookPage({ activeFormService, setActiveFormService }: Bo
         <div className="lg:col-span-7 bg-white p-4.5 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#F2D6E4] shadow-xs">
           <BookingForm
             initialServiceId={activeFormService}
+            selectedPhotoUrl={selectedPhotoUrl}
             onSuccess={() => {
               setActiveFormService('');
+              if (setSelectedPhotoUrl) setSelectedPhotoUrl('');
             }}
           />
         </div>

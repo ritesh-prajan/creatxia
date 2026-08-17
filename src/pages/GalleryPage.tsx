@@ -134,7 +134,7 @@ const galleryData: GalleryItem[] = [
 
 interface GalleryPageProps {
   navigateTo: (page: PageView) => void;
-  onBookService?: (serviceName: string) => void;
+  onBookService?: (serviceName: string, photoUrl?: string) => void;
 }
 
 export default function GalleryPage({ navigateTo, onBookService }: GalleryPageProps) {
@@ -308,7 +308,7 @@ export default function GalleryPage({ navigateTo, onBookService }: GalleryPagePr
                 onClick={() => {
                   closeLightbox();
                   const styleRefName = `${currentItem.category} Style (Photo #${lightboxIndex! + 1})`;
-                  if (onBookService) onBookService(styleRefName);
+                  if (onBookService) onBookService(styleRefName, currentItem.image);
                   navigateTo('book');
                 }}
                 className="w-full sm:w-auto bg-brand-plum hover:bg-brand-rose active:scale-95 text-white font-bold text-xs py-3 px-6 rounded-full shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider"

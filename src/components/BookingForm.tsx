@@ -11,10 +11,11 @@ import { CONFIG } from '../config';
 
 interface BookingFormProps {
   initialServiceId?: string;
+  selectedPhotoUrl?: string;
   onSuccess?: () => void;
 }
 
-export default function BookingForm({ initialServiceId = '', onSuccess }: BookingFormProps) {
+export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = '', onSuccess }: BookingFormProps) {
   // Let's resolve the initial service based on initialServiceId
   let defaultService = 'Box Fold';
   if (initialServiceId.toLowerCase().includes('hanger')) {
@@ -24,6 +25,12 @@ export default function BookingForm({ initialServiceId = '', onSuccess }: Bookin
   } else if (initialServiceId.toLowerCase().includes('celebrity') || initialServiceId.toLowerCase().includes('designer')) {
     defaultService = 'Celebrity Draping';
   }
+
+  const fullPhotoUrl = selectedPhotoUrl
+    ? (selectedPhotoUrl.startsWith('http')
+        ? selectedPhotoUrl
+        : `${window.location.origin}${selectedPhotoUrl}`)
+    : '';
 
   const [formData, setFormData] = useState<BookingFormData>({
     fullName: '',
@@ -137,6 +144,7 @@ export default function BookingForm({ initialServiceId = '', onSuccess }: Bookin
     const urgentText = formData.isUrgent ? 'Yes (+₹150)' : 'No';
 
     const styleReferenceLine = initialServiceId ? `Selected Style/Design: ${initialServiceId}\n` : '';
+    const photoReferenceLine = fullPhotoUrl ? `Selected Photo Link: ${fullPhotoUrl}\n` : '';
 
     // Construct the WhatsApp message payload precisely format matching instructions
     const message = `*New Booking — Tuck & Pin*\n\n` +
@@ -144,6 +152,7 @@ export default function BookingForm({ initialServiceId = '', onSuccess }: Bookin
       `Phone: ${formData.phone}\n` +
       `Service: ${formData.serviceType}\n` +
       styleReferenceLine +
+      photoReferenceLine +
       `Saree Type: ${formData.sareeType}\n` +
       `No. of Sarees: ${formData.numberOfSarees}\n` +
       `Expected Delivery: ${formData.expectedDeliveryDate}\n` +
@@ -176,27 +185,30 @@ export default function BookingForm({ initialServiceId = '', onSuccess }: Bookin
 
   if (successUrl) {
     return (
-      <div className="bg-white rounded-[32px] border border-[#F2D6E4] p-8 shadow-md text-center space-y-6 my-4 animate-fadeIn">
-        <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-600 border border-emerald-100">
-          <svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-          </svg>
+      <div className="bg-white rounded-3xl p-8 border border-emerald-200 text-center space-y-6 shadow-sm animate-fadeIn font-sans text-left">
+        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600">
+          <CheckCircle2 className="w-10 h-10" />
         </div>
-        
-        <div className="space-y-2">
+
+        <div className="space-y-2 text-center">
           <h3 className="font-serif text-2xl font-bold text-neutral-dark">
             Booking Form Ready!
           </h3>
-          <p className="font-sans text-xs text-neutral-mid leading-relaxed max-w-xs mx-auto">
-            Your saree custom arrangements and measurements have been perfectly formatted. Tap the button below to instantly transmit them to Tuck & Pin on WhatsApp.
+          <p className="text-xs text-neutral-mid leading-relaxed max-w-md mx-auto">
+            Click the button below to send your details directly to our studio team on WhatsApp.
           </p>
         </div>
 
-        <div className="bg-neutral-warm p-4 rounded-2xl border border-brand-blush/20 text-left space-y-2">
-          <span className="text-[10px] uppercase tracking-widest font-bold text-brand-rose">Summary Details</span>
-          <div className="grid grid-cols-2 gap-2 text-xs font-sans">
+        <div className="bg-neutral-warm/20 p-4 rounded-2xl text-left border border-neutral-warm text-xs space-y-2 max-w-md mx-auto">
+          <div className="font-bold text-brand-plum flex items-center justify-between">
+            <span>Booking Overview</span>
+            <span className="text-[10px] bg-brand-rose text-white px-2 py-0.5 rounded-full uppercase">
+              Draft
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 text-[11px]">
             <div>
-              <span className="text-neutral-mid block text-[10px] uppercase">Name</span>
+              <span className="text-neutral-mid block text-[10px] uppercase">Client Name</span>
               <span className="font-bold text-neutral-dark">{formData.fullName}</span>
             </div>
             <div>
@@ -246,18 +258,32 @@ export default function BookingForm({ initialServiceId = '', onSuccess }: Bookin
         </div>
       )}
 
-      {initialServiceId && (
-        <div className="bg-brand-plum/10 border border-brand-plum/30 text-brand-plum rounded-2xl p-4 flex items-center justify-between gap-3 text-xs font-sans animate-fadeIn">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider block text-brand-rose">
-              Selected Gallery Reference Style
-            </span>
-            <span className="font-serif font-bold text-sm text-brand-plum">
-              "{initialServiceId}"
-            </span>
+      {(initialServiceId || selectedPhotoUrl) && (
+        <div className="bg-gradient-to-r from-brand-plum/10 via-brand-rose/10 to-brand-blush/20 border border-brand-plum/30 text-brand-plum rounded-2xl p-4 flex items-center justify-between gap-4 text-xs font-sans animate-fadeIn">
+          <div className="flex items-center gap-3">
+            {selectedPhotoUrl && (
+              <img
+                src={selectedPhotoUrl}
+                alt="Selected Style Reference"
+                className="w-14 h-18 object-cover rounded-xl shadow-xs border-2 border-white shrink-0"
+              />
+            )}
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider block text-brand-rose">
+                Selected Gallery Reference Style & Photo
+              </span>
+              <span className="font-serif font-bold text-sm text-brand-plum block">
+                "{initialServiceId || 'Selected Photo Style'}"
+              </span>
+              {fullPhotoUrl && (
+                <span className="text-[11px] text-neutral-mid block mt-0.5 font-sans">
+                  ✦ Direct photo link will be attached to your WhatsApp message for instant image preview!
+                </span>
+              )}
+            </div>
           </div>
-          <span className="bg-brand-plum text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full shrink-0">
-            Selected Style Attached
+          <span className="bg-brand-plum text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full shrink-0 hidden sm:inline-block shadow-xs">
+            Photo Attached
           </span>
         </div>
       )}

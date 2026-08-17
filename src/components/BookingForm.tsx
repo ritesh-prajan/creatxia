@@ -48,17 +48,8 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
     spineToRightThigh: '',
     leftShoulderToBust: '',
     fullBustCoverage: '',
-    additionalNotes: initialServiceId ? `I'd like it to be like "${initialServiceId}"` : '',
+    additionalNotes: '',
   });
-
-  React.useEffect(() => {
-    if (initialServiceId) {
-      setFormData((prev) => ({
-        ...prev,
-        additionalNotes: `I'd like it to be like "${initialServiceId}"`,
-      }));
-    }
-  }, [initialServiceId]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeInstruction, setActiveInstruction] = useState<string | null>('hip');

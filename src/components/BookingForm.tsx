@@ -40,7 +40,7 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
     numberOfSarees: 1,
     expectedDeliveryDate: '',
     isUrgent: false,
-    pickupMethod: 'Drop at Location',
+    pickupMethod: 'Courier',
     hipMeasurement: '',
     useCm: false, // default to inches
     shoulderToCalf: '',
@@ -71,8 +71,8 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
       desc: 'Measure from your left shoulder peak curving down to the mid-point of your upper spine.',
     },
     spineThigh: {
-      title: 'Spine to Mid-Right Thigh',
-      desc: 'Measure starting from your upper mid-spine wrapping down around to your mid-right thigh.',
+      title: 'Mid of Spine (near hip) to Front Right Thigh',
+      desc: 'Mid of spine near hip and come from back to front right thigh.',
     },
     lsBust: {
       title: 'Left Shoulder to Mid-Bust',
@@ -249,36 +249,6 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
         </div>
       )}
 
-      {(initialServiceId || selectedPhotoUrl) && (
-        <div className="bg-gradient-to-r from-brand-plum/10 via-brand-rose/10 to-brand-blush/20 border border-brand-plum/30 text-brand-plum rounded-2xl p-4 flex items-center justify-between gap-4 text-xs font-sans animate-fadeIn">
-          <div className="flex items-center gap-3">
-            {selectedPhotoUrl && (
-              <img
-                src={selectedPhotoUrl}
-                alt="Selected Style Reference"
-                className="w-14 h-18 object-cover rounded-xl shadow-xs border-2 border-white shrink-0"
-              />
-            )}
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider block text-brand-rose">
-                Selected Gallery Reference Style & Photo
-              </span>
-              <span className="font-serif font-bold text-sm text-brand-plum block">
-                "{initialServiceId || 'Selected Photo Style'}"
-              </span>
-              {fullPhotoUrl && (
-                <span className="text-[11px] text-neutral-mid block mt-0.5 font-sans">
-                  ✦ Direct photo link will be attached to your WhatsApp message for instant image preview!
-                </span>
-              )}
-            </div>
-          </div>
-          <span className="bg-brand-plum text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full shrink-0 hidden sm:inline-block shadow-xs">
-            Photo Attached
-          </span>
-        </div>
-      )}
-
       {/* Contact Details */}
       <div className="bg-transparent sm:bg-white rounded-none sm:rounded-2xl p-0 sm:p-5 border-0 sm:border border-brand-blush/20 shadow-none sm:shadow-xs space-y-4 border-b border-brand-blush/15 sm:border-b-0 pb-6 sm:pb-0">
         <h3 className="font-serif text-lg font-bold text-brand-plum border-b border-brand-blush/20 pb-2 mb-3">
@@ -441,9 +411,8 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
           <span id="pickupMethodLabel" className="block text-xs font-bold text-[#444] uppercase tracking-wider mb-2">
             Saree Delivery & Pickup Method <span className="text-brand-rose">*</span>
           </span>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {[
-              { id: 'Drop at Location', label: 'Drop at Location', sub: 'Visit Studio' },
               { id: 'Courier', label: 'Courier', sub: 'Ship to us' },
               { id: 'Dunzo', label: 'Dunzo / Porter', sub: 'Local delivery' },
             ].map((method) => (
@@ -557,7 +526,7 @@ export default function BookingForm({ initialServiceId = '', selectedPhotoUrl = 
 
               <div>
                 <label htmlFor="bookingSpineThigh" className="block text-[10px] font-bold text-[#555] uppercase tracking-wider mb-1 cursor-pointer">
-                  Spine to Mid-R. Thigh
+                  Mid of Spine to Front R. Thigh
                 </label>
                 <input
                   id="bookingSpineThigh"
